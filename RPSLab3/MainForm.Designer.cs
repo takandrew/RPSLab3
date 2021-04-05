@@ -29,9 +29,9 @@ namespace RPSLab3
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Series series4 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea10 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Series series19 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series20 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
@@ -112,19 +112,19 @@ namespace RPSLab3
             // Graph
             // 
             this.Graph.BackColor = System.Drawing.Color.Transparent;
-            chartArea2.Name = "ChartArea1";
-            this.Graph.ChartAreas.Add(chartArea2);
+            chartArea10.Name = "ChartArea1";
+            this.Graph.ChartAreas.Add(chartArea10);
             this.Graph.Location = new System.Drawing.Point(227, 31);
             this.Graph.Name = "Graph";
-            series3.ChartArea = "ChartArea1";
-            series3.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
-            series3.Name = "TractrixPos";
-            series4.ChartArea = "ChartArea1";
-            series4.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
-            series4.Name = "TractrixNeg";
-            this.Graph.Series.Add(series3);
-            this.Graph.Series.Add(series4);
-            this.Graph.Size = new System.Drawing.Size(677, 323);
+            series19.ChartArea = "ChartArea1";
+            series19.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
+            series19.Name = "TractrixPos";
+            series20.ChartArea = "ChartArea1";
+            series20.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
+            series20.Name = "TractrixNeg";
+            this.Graph.Series.Add(series19);
+            this.Graph.Series.Add(series20);
+            this.Graph.Size = new System.Drawing.Size(677, 475);
             this.Graph.TabIndex = 9;
             this.Graph.Text = "chart1";
             // 
@@ -136,7 +136,7 @@ namespace RPSLab3
             this.InfoToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(934, 30);
+            this.menuStrip1.Size = new System.Drawing.Size(1233, 28);
             this.menuStrip1.TabIndex = 10;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -147,7 +147,7 @@ namespace RPSLab3
             this.сохранитьИсходныеДанныеВФайлToolStripMenuItem,
             this.сохранитьРезультатВФайлToolStripMenuItem});
             this.файлToolStripMenuItem.Name = "файлToolStripMenuItem";
-            this.файлToolStripMenuItem.Size = new System.Drawing.Size(59, 26);
+            this.файлToolStripMenuItem.Size = new System.Drawing.Size(59, 24);
             this.файлToolStripMenuItem.Text = "Файл";
             // 
             // импортироватьИсходныеДанныеИзФайлаToolStripMenuItem
@@ -171,7 +171,7 @@ namespace RPSLab3
             // InfoToolStripMenuItem
             // 
             this.InfoToolStripMenuItem.Name = "InfoToolStripMenuItem";
-            this.InfoToolStripMenuItem.Size = new System.Drawing.Size(81, 26);
+            this.InfoToolStripMenuItem.Size = new System.Drawing.Size(81, 24);
             this.InfoToolStripMenuItem.Text = "Справка";
             this.InfoToolStripMenuItem.Click += new System.EventHandler(this.InfoToolStripMenuItem_Click);
             // 
@@ -180,12 +180,13 @@ namespace RPSLab3
             this.GraphTable.AllowUserToAddRows = false;
             this.GraphTable.AllowUserToDeleteRows = false;
             this.GraphTable.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.GraphTable.Location = new System.Drawing.Point(227, 377);
+            this.GraphTable.Location = new System.Drawing.Point(922, 43);
             this.GraphTable.Name = "GraphTable";
             this.GraphTable.ReadOnly = true;
+            this.GraphTable.RowHeadersVisible = false;
             this.GraphTable.RowHeadersWidth = 51;
             this.GraphTable.RowTemplate.Height = 24;
-            this.GraphTable.Size = new System.Drawing.Size(677, 134);
+            this.GraphTable.Size = new System.Drawing.Size(296, 463);
             this.GraphTable.TabIndex = 11;
             // 
             // BuildGraphButton
@@ -323,7 +324,7 @@ namespace RPSLab3
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(934, 535);
+            this.ClientSize = new System.Drawing.Size(1233, 535);
             this.Controls.Add(this.ACoefficientUpDown);
             this.Controls.Add(this.ScaleUpDown);
             this.Controls.Add(this.RightBorderUpDown);

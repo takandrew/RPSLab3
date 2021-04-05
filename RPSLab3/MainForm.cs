@@ -18,8 +18,10 @@ namespace RPSLab3
         double rightBorder;
         double scale;
         double x; double y;
-        List<double> arrX = new List<double>();
-        List<double> arrY = new List<double>();
+        List<double> arrXpos = new List<double>();
+        List<double> arrYpos = new List<double>();
+        List<double> arrXneg = new List<double>();
+        List<double> arrYneg = new List<double>();
         public MainForm()
         {
             InitializeComponent();
@@ -49,6 +51,10 @@ namespace RPSLab3
 
         private void BuildGraphButton_Click(object sender, EventArgs e)
         {
+            GraphTable.Rows.Clear();
+            GraphTable.Columns.Clear();
+            arrYpos.Clear(); arrXpos.Clear();
+            arrYneg.Clear(); arrXneg.Clear();
             Graph.Series["TractrixPos"].Points.Clear();
             Graph.Series["TractrixNeg"].Points.Clear();
             aCoefficient = (double)ACoefficientUpDown.Value;
@@ -70,15 +76,24 @@ namespace RPSLab3
             for (y = aCoefficient; y > 0; y -= scale)
             {
                 x = Tractrix.TractrixBuild(y, aCoefficient);
-                //if ((x >= leftBorder) && (x <= rightBorder) )
-                //{
-                //    Graph.Series["TractrixPos"].Points.AddXY(x, y);
-                //    Graph.Series["TractrixNeg"].Points.AddXY(-x, y);
-                //}
-                Graph.Series["TractrixPos"].Points.AddXY(x, y);
-                Graph.Series["TractrixNeg"].Points.AddXY(-x, y);
+                if ((x >= leftBorder) && (x <= rightBorder))
+                {
+                    Graph.Series["TractrixPos"].Points.AddXY(x, y);
+                    Graph.Series["TractrixNeg"].Points.AddXY(-x, y);
+                    arrXpos.Add(x);
+                    arrXneg.Add(-x);
+                    arrYneg.Add(y);
+                    arrYpos.Add(y);
+                }
             }
-            
+            arrYpos.Reverse();
+            arrXneg.Reverse();
+            GraphTable.Columns.Add("xColumn", "x");
+            GraphTable.Columns.Add("yColumn", "y");
+            for (int i = 0; i < arrXpos.Count; i++)
+                GraphTable.Rows.Add(arrXneg[i], arrYpos[i]);
+            for (int i = 1; i < arrXpos.Count; i++)
+                GraphTable.Rows.Add(arrXpos[i], arrYneg[i]);
         }
     }
 }
