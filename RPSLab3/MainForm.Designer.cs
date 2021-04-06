@@ -29,9 +29,9 @@ namespace RPSLab3
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea10 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Series series19 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Series series20 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea3 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Series series5 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series6 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
@@ -40,9 +40,9 @@ namespace RPSLab3
             this.Graph = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.файлToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.импортироватьИсходныеДанныеИзФайлаToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.сохранитьИсходныеДанныеВФайлToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.сохранитьРезультатВФайлToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.ImportDataToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.SaveDataToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.SaveResultToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.InfoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.GraphTable = new System.Windows.Forms.DataGridView();
             this.BuildGraphButton = new System.Windows.Forms.Button();
@@ -53,6 +53,12 @@ namespace RPSLab3
             this.RightBorderUpDown = new System.Windows.Forms.NumericUpDown();
             this.ScaleUpDown = new System.Windows.Forms.NumericUpDown();
             this.ACoefficientUpDown = new System.Windows.Forms.NumericUpDown();
+            this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
+            this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
+            this.настройкаToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.AutoShowInfoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.label7 = new System.Windows.Forms.Label();
+            this.label8 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.Graph)).BeginInit();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.GraphTable)).BeginInit();
@@ -103,7 +109,7 @@ namespace RPSLab3
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(47, 170);
+            this.label5.Location = new System.Drawing.Point(47, 192);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(125, 17);
             this.label5.TabIndex = 8;
@@ -112,18 +118,20 @@ namespace RPSLab3
             // Graph
             // 
             this.Graph.BackColor = System.Drawing.Color.Transparent;
-            chartArea10.Name = "ChartArea1";
-            this.Graph.ChartAreas.Add(chartArea10);
-            this.Graph.Location = new System.Drawing.Point(227, 31);
+            chartArea3.Name = "ChartArea1";
+            this.Graph.ChartAreas.Add(chartArea3);
+            this.Graph.Location = new System.Drawing.Point(227, 48);
             this.Graph.Name = "Graph";
-            series19.ChartArea = "ChartArea1";
-            series19.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
-            series19.Name = "TractrixPos";
-            series20.ChartArea = "ChartArea1";
-            series20.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
-            series20.Name = "TractrixNeg";
-            this.Graph.Series.Add(series19);
-            this.Graph.Series.Add(series20);
+            series5.ChartArea = "ChartArea1";
+            series5.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
+            series5.Color = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(192)))));
+            series5.Name = "TractrixPos";
+            series6.ChartArea = "ChartArea1";
+            series6.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
+            series6.Color = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(192)))));
+            series6.Name = "TractrixNeg";
+            this.Graph.Series.Add(series5);
+            this.Graph.Series.Add(series6);
             this.Graph.Size = new System.Drawing.Size(677, 475);
             this.Graph.TabIndex = 9;
             this.Graph.Text = "chart1";
@@ -133,6 +141,7 @@ namespace RPSLab3
             this.menuStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.файлToolStripMenuItem,
+            this.настройкаToolStripMenuItem,
             this.InfoToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
@@ -143,30 +152,33 @@ namespace RPSLab3
             // файлToolStripMenuItem
             // 
             this.файлToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.импортироватьИсходныеДанныеИзФайлаToolStripMenuItem,
-            this.сохранитьИсходныеДанныеВФайлToolStripMenuItem,
-            this.сохранитьРезультатВФайлToolStripMenuItem});
+            this.ImportDataToolStripMenuItem,
+            this.SaveDataToolStripMenuItem,
+            this.SaveResultToolStripMenuItem});
             this.файлToolStripMenuItem.Name = "файлToolStripMenuItem";
             this.файлToolStripMenuItem.Size = new System.Drawing.Size(59, 24);
             this.файлToolStripMenuItem.Text = "Файл";
             // 
-            // импортироватьИсходныеДанныеИзФайлаToolStripMenuItem
+            // ImportDataToolStripMenuItem
             // 
-            this.импортироватьИсходныеДанныеИзФайлаToolStripMenuItem.Name = "импортироватьИсходныеДанныеИзФайлаToolStripMenuItem";
-            this.импортироватьИсходныеДанныеИзФайлаToolStripMenuItem.Size = new System.Drawing.Size(400, 26);
-            this.импортироватьИсходныеДанныеИзФайлаToolStripMenuItem.Text = "Импортировать исходные данные из файла";
+            this.ImportDataToolStripMenuItem.Name = "ImportDataToolStripMenuItem";
+            this.ImportDataToolStripMenuItem.Size = new System.Drawing.Size(400, 26);
+            this.ImportDataToolStripMenuItem.Text = "Импортировать исходные данные из файла";
+            this.ImportDataToolStripMenuItem.Click += new System.EventHandler(this.ImportDataToolStripMenuItem_Click);
             // 
-            // сохранитьИсходныеДанныеВФайлToolStripMenuItem
+            // SaveDataToolStripMenuItem
             // 
-            this.сохранитьИсходныеДанныеВФайлToolStripMenuItem.Name = "сохранитьИсходныеДанныеВФайлToolStripMenuItem";
-            this.сохранитьИсходныеДанныеВФайлToolStripMenuItem.Size = new System.Drawing.Size(400, 26);
-            this.сохранитьИсходныеДанныеВФайлToolStripMenuItem.Text = "Сохранить исходные данные в файл";
+            this.SaveDataToolStripMenuItem.Name = "SaveDataToolStripMenuItem";
+            this.SaveDataToolStripMenuItem.Size = new System.Drawing.Size(400, 26);
+            this.SaveDataToolStripMenuItem.Text = "Сохранить исходные данные в файл";
+            this.SaveDataToolStripMenuItem.Click += new System.EventHandler(this.SaveDataToolStripMenuItem_Click);
             // 
-            // сохранитьРезультатВФайлToolStripMenuItem
+            // SaveResultToolStripMenuItem
             // 
-            this.сохранитьРезультатВФайлToolStripMenuItem.Name = "сохранитьРезультатВФайлToolStripMenuItem";
-            this.сохранитьРезультатВФайлToolStripMenuItem.Size = new System.Drawing.Size(400, 26);
-            this.сохранитьРезультатВФайлToolStripMenuItem.Text = "Сохранить результат в файл";
+            this.SaveResultToolStripMenuItem.Name = "SaveResultToolStripMenuItem";
+            this.SaveResultToolStripMenuItem.Size = new System.Drawing.Size(400, 26);
+            this.SaveResultToolStripMenuItem.Text = "Сохранить результат в файл";
+            this.SaveResultToolStripMenuItem.Click += new System.EventHandler(this.SaveResultToolStripMenuItem_Click);
             // 
             // InfoToolStripMenuItem
             // 
@@ -180,13 +192,13 @@ namespace RPSLab3
             this.GraphTable.AllowUserToAddRows = false;
             this.GraphTable.AllowUserToDeleteRows = false;
             this.GraphTable.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.GraphTable.Location = new System.Drawing.Point(922, 43);
+            this.GraphTable.Location = new System.Drawing.Point(925, 74);
             this.GraphTable.Name = "GraphTable";
             this.GraphTable.ReadOnly = true;
             this.GraphTable.RowHeadersVisible = false;
             this.GraphTable.RowHeadersWidth = 51;
             this.GraphTable.RowTemplate.Height = 24;
-            this.GraphTable.Size = new System.Drawing.Size(296, 463);
+            this.GraphTable.Size = new System.Drawing.Size(296, 426);
             this.GraphTable.TabIndex = 11;
             // 
             // BuildGraphButton
@@ -320,11 +332,52 @@ namespace RPSLab3
             0,
             0});
             // 
+            // saveFileDialog1
+            // 
+            this.saveFileDialog1.CreatePrompt = true;
+            this.saveFileDialog1.DefaultExt = "txt";
+            this.saveFileDialog1.Filter = "txt files (*.txt)|*.txt|All files (*.*)|*.*";
+            // 
+            // настройкаToolStripMenuItem
+            // 
+            this.настройкаToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.AutoShowInfoToolStripMenuItem});
+            this.настройкаToolStripMenuItem.Name = "настройкаToolStripMenuItem";
+            this.настройкаToolStripMenuItem.Size = new System.Drawing.Size(97, 24);
+            this.настройкаToolStripMenuItem.Text = "Настройка";
+            // 
+            // AutoShowInfoToolStripMenuItem
+            // 
+            this.AutoShowInfoToolStripMenuItem.Name = "AutoShowInfoToolStripMenuItem";
+            this.AutoShowInfoToolStripMenuItem.Size = new System.Drawing.Size(394, 26);
+            this.AutoShowInfoToolStripMenuItem.Text = "Выводить справку при запуске программы";
+            this.AutoShowInfoToolStripMenuItem.Click += new System.EventHandler(this.AutoShowInfoToolStripMenuItem_Click);
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(524, 43);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(119, 17);
+            this.label7.TabIndex = 20;
+            this.label7.Text = "График функции";
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(1013, 48);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(136, 17);
+            this.label8.TabIndex = 21;
+            this.label8.Text = "Таблица значений ";
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1233, 535);
+            this.Controls.Add(this.label8);
+            this.Controls.Add(this.label7);
             this.Controls.Add(this.ACoefficientUpDown);
             this.Controls.Add(this.ScaleUpDown);
             this.Controls.Add(this.RightBorderUpDown);
@@ -369,19 +422,25 @@ namespace RPSLab3
         private System.Windows.Forms.DataVisualization.Charting.Chart Graph;
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem файлToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem сохранитьИсходныеДанныеВФайлToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem сохранитьРезультатВФайлToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem SaveDataToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem SaveResultToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem InfoToolStripMenuItem;
         private System.Windows.Forms.DataGridView GraphTable;
         private System.Windows.Forms.Button BuildGraphButton;
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.PictureBox pictureBox2;
         private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.ToolStripMenuItem импортироватьИсходныеДанныеИзФайлаToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem ImportDataToolStripMenuItem;
         private System.Windows.Forms.NumericUpDown LeftBorderUpDown;
         private System.Windows.Forms.NumericUpDown RightBorderUpDown;
         private System.Windows.Forms.NumericUpDown ScaleUpDown;
         private System.Windows.Forms.NumericUpDown ACoefficientUpDown;
+        private System.Windows.Forms.SaveFileDialog saveFileDialog1;
+        private System.Windows.Forms.OpenFileDialog openFileDialog1;
+        private System.Windows.Forms.ToolStripMenuItem настройкаToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem AutoShowInfoToolStripMenuItem;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Label label8;
     }
 }
 
