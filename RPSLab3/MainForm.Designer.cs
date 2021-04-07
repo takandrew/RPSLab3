@@ -29,9 +29,9 @@ namespace RPSLab3
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea3 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Series series5 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Series series6 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
@@ -43,6 +43,8 @@ namespace RPSLab3
             this.ImportDataToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.SaveDataToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.SaveResultToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.настройкаToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.AutoShowInfoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.InfoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.GraphTable = new System.Windows.Forms.DataGridView();
             this.BuildGraphButton = new System.Windows.Forms.Button();
@@ -55,8 +57,6 @@ namespace RPSLab3
             this.ACoefficientUpDown = new System.Windows.Forms.NumericUpDown();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
-            this.настройкаToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.AutoShowInfoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.label7 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.Graph)).BeginInit();
@@ -118,20 +118,20 @@ namespace RPSLab3
             // Graph
             // 
             this.Graph.BackColor = System.Drawing.Color.Transparent;
-            chartArea3.Name = "ChartArea1";
-            this.Graph.ChartAreas.Add(chartArea3);
+            chartArea1.Name = "ChartArea1";
+            this.Graph.ChartAreas.Add(chartArea1);
             this.Graph.Location = new System.Drawing.Point(227, 48);
             this.Graph.Name = "Graph";
-            series5.ChartArea = "ChartArea1";
-            series5.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
-            series5.Color = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(192)))));
-            series5.Name = "TractrixPos";
-            series6.ChartArea = "ChartArea1";
-            series6.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
-            series6.Color = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(192)))));
-            series6.Name = "TractrixNeg";
-            this.Graph.Series.Add(series5);
-            this.Graph.Series.Add(series6);
+            series1.ChartArea = "ChartArea1";
+            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
+            series1.Color = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(192)))));
+            series1.Name = "TractrixPos";
+            series2.ChartArea = "ChartArea1";
+            series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
+            series2.Color = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(192)))));
+            series2.Name = "TractrixNeg";
+            this.Graph.Series.Add(series1);
+            this.Graph.Series.Add(series2);
             this.Graph.Size = new System.Drawing.Size(677, 475);
             this.Graph.TabIndex = 9;
             this.Graph.Text = "chart1";
@@ -145,7 +145,7 @@ namespace RPSLab3
             this.InfoToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(1233, 28);
+            this.menuStrip1.Size = new System.Drawing.Size(1233, 30);
             this.menuStrip1.TabIndex = 10;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -156,7 +156,7 @@ namespace RPSLab3
             this.SaveDataToolStripMenuItem,
             this.SaveResultToolStripMenuItem});
             this.файлToolStripMenuItem.Name = "файлToolStripMenuItem";
-            this.файлToolStripMenuItem.Size = new System.Drawing.Size(59, 24);
+            this.файлToolStripMenuItem.Size = new System.Drawing.Size(59, 26);
             this.файлToolStripMenuItem.Text = "Файл";
             // 
             // ImportDataToolStripMenuItem
@@ -180,10 +180,25 @@ namespace RPSLab3
             this.SaveResultToolStripMenuItem.Text = "Сохранить результат в файл";
             this.SaveResultToolStripMenuItem.Click += new System.EventHandler(this.SaveResultToolStripMenuItem_Click);
             // 
+            // настройкаToolStripMenuItem
+            // 
+            this.настройкаToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.AutoShowInfoToolStripMenuItem});
+            this.настройкаToolStripMenuItem.Name = "настройкаToolStripMenuItem";
+            this.настройкаToolStripMenuItem.Size = new System.Drawing.Size(97, 26);
+            this.настройкаToolStripMenuItem.Text = "Настройка";
+            // 
+            // AutoShowInfoToolStripMenuItem
+            // 
+            this.AutoShowInfoToolStripMenuItem.Name = "AutoShowInfoToolStripMenuItem";
+            this.AutoShowInfoToolStripMenuItem.Size = new System.Drawing.Size(394, 26);
+            this.AutoShowInfoToolStripMenuItem.Text = "Выводить справку при запуске программы";
+            this.AutoShowInfoToolStripMenuItem.Click += new System.EventHandler(this.AutoShowInfoToolStripMenuItem_Click);
+            // 
             // InfoToolStripMenuItem
             // 
             this.InfoToolStripMenuItem.Name = "InfoToolStripMenuItem";
-            this.InfoToolStripMenuItem.Size = new System.Drawing.Size(81, 24);
+            this.InfoToolStripMenuItem.Size = new System.Drawing.Size(81, 26);
             this.InfoToolStripMenuItem.Text = "Справка";
             this.InfoToolStripMenuItem.Click += new System.EventHandler(this.InfoToolStripMenuItem_Click);
             // 
@@ -319,7 +334,7 @@ namespace RPSLab3
             0,
             0});
             this.ACoefficientUpDown.Minimum = new decimal(new int[] {
-            1,
+            2,
             0,
             0,
             131072});
@@ -337,21 +352,6 @@ namespace RPSLab3
             this.saveFileDialog1.CreatePrompt = true;
             this.saveFileDialog1.DefaultExt = "txt";
             this.saveFileDialog1.Filter = "txt files (*.txt)|*.txt|All files (*.*)|*.*";
-            // 
-            // настройкаToolStripMenuItem
-            // 
-            this.настройкаToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.AutoShowInfoToolStripMenuItem});
-            this.настройкаToolStripMenuItem.Name = "настройкаToolStripMenuItem";
-            this.настройкаToolStripMenuItem.Size = new System.Drawing.Size(97, 24);
-            this.настройкаToolStripMenuItem.Text = "Настройка";
-            // 
-            // AutoShowInfoToolStripMenuItem
-            // 
-            this.AutoShowInfoToolStripMenuItem.Name = "AutoShowInfoToolStripMenuItem";
-            this.AutoShowInfoToolStripMenuItem.Size = new System.Drawing.Size(394, 26);
-            this.AutoShowInfoToolStripMenuItem.Text = "Выводить справку при запуске программы";
-            this.AutoShowInfoToolStripMenuItem.Click += new System.EventHandler(this.AutoShowInfoToolStripMenuItem_Click);
             // 
             // label7
             // 

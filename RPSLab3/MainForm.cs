@@ -40,7 +40,6 @@ namespace RPSLab3
                 AutoShowInfoToolStripMenuItem.Checked = true;
                 showInfoForm = new InfoForm();
                 showInfoForm.Show();
-
             }
             else
                 AutoShowInfoToolStripMenuItem.Checked = false;
@@ -85,18 +84,19 @@ namespace RPSLab3
             Graph.ChartAreas[0].AxisY.Minimum = 0;
             Graph.ChartAreas[0].AxisY.Maximum = aCoefficient;
             scale = (double)ScaleUpDown.Value;
-            //Graph.Series["TractrixPos"].Points.AddXY(0, aCoefficient);
-            //Graph.Series["TractrixNeg"].Points.AddXY(0, aCoefficient);
             for (y = aCoefficient; y > 0; y -= scale)
             {
                 x = Tractrix.TractrixBuild(y, aCoefficient);
                 if ((x >= leftBorder) && (x <= rightBorder))
                 {
                     Graph.Series["TractrixPos"].Points.AddXY(x, y);
-                    Graph.Series["TractrixNeg"].Points.AddXY(-x, y);
                     arrXpos.Add(x);
-                    arrXneg.Add(-x);
                     arrYneg.Add(y);
+                }
+                if ((-x >= leftBorder) && (-x <= rightBorder))
+                {
+                    Graph.Series["TractrixNeg"].Points.AddXY(-x, y);
+                    arrXneg.Add(-x);
                     arrYpos.Add(y);
                 }
             }
@@ -106,7 +106,7 @@ namespace RPSLab3
             GraphTable.Columns.Add("yColumn", "y");
             var scaleDotPos = (scale.ToString()).IndexOf('.');
             scaleNum = (scale.ToString()).Length - 1 - scaleDotPos;
-            for (int i = 0; i < arrXpos.Count; i++)
+            for (int i = 0; i < arrXneg.Count; i++)
                 GraphTable.Rows.Add(Math.Round(arrXneg[i], scaleNum), Math.Round(arrYpos[i], scaleNum));
             for (int i = 1; i < arrXpos.Count; i++)
                 GraphTable.Rows.Add(Math.Round(arrXpos[i], scaleNum), Math.Round(arrYneg[i], scaleNum));
@@ -114,12 +114,20 @@ namespace RPSLab3
 
         private void SaveDataToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (saveFileDialog1.ShowDialog() == DialogResult.Cancel)
-                return; //Случай с отменой выбора файла
-            string saveFilename = saveFileDialog1.FileName;
-            //Сохранение в файл
-            System.IO.File.WriteAllText(saveFilename, LeftBorderUpDown.Text + "\n" + RightBorderUpDown.Text +
-               "\n" + (ScaleUpDown.Value).ToString() + "\n" + ACoefficientUpDown.Text);
+            try
+            {
+                if (saveFileDialog1.ShowDialog() == DialogResult.Cancel)
+                    return; //Случай с отменой выбора файла
+                string saveFilename = saveFileDialog1.FileName;
+                //Сохранение в файл
+                System.IO.File.WriteAllText(saveFilename, LeftBorderUpDown.Text + "\n" + RightBorderUpDown.Text +
+                   "\n" + (ScaleUpDown.Value).ToString() + "\n" + ACoefficientUpDown.Text);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Ошибка");
+                return;
+            }
             MessageBox.Show("Файл сохранен", "Файл");
         }
 
@@ -165,29 +173,37 @@ namespace RPSLab3
 
         private void SaveResultToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (saveFileDialog1.ShowDialog() == DialogResult.Cancel)
-                return; //Случай с отменой выбора файла
-            string saveFilename = saveFileDialog1.FileName;
-            string dataString =
-                            "Левая граница: " + leftBorder + "\n" +
-                            "Правая граница: " + rightBorder + "\n" +
-                            "Шаг: " + scale + "\n" +
-                            "Коэффициент c: " + aCoefficient + "\n" +
-                            "\nТаблица значений.\n";
-            string tableString = String.Format("\n{0, 12} {1, 15}", "Координата X", "Координата Y");
-            for (int i = 0; i < arrXneg.Count; i++)
+            try
             {
-                tableString += String.Format("\n{0, 9} {1, 16}",
-                                       Math.Round(arrXneg[i], scaleNum), Math.Round(arrYpos[i], scaleNum));
+                if (saveFileDialog1.ShowDialog() == DialogResult.Cancel)
+                    return; //Случай с отменой выбора файла
+                string saveFilename = saveFileDialog1.FileName;
+                string dataString =
+                                "Левая граница: " + leftBorder + "\n" +
+                                "Правая граница: " + rightBorder + "\n" +
+                                "Шаг: " + scale + "\n" +
+                                "Коэффициент c: " + aCoefficient + "\n" +
+                                "\nТаблица значений.\n";
+                string tableString = String.Format("\n{0, 12} {1, 15}", "Координата X", "Координата Y");
+                for (int i = 0; i < arrXneg.Count; i++)
+                {
+                    tableString += String.Format("\n{0, 9} {1, 16}",
+                                           Math.Round(arrXneg[i], scaleNum), Math.Round(arrYpos[i], scaleNum));
+                }
+                for (int i = 1; i < arrXpos.Count; i++)
+                {
+                    tableString += String.Format("\n{0, 9} {1, 16}",
+                                           Math.Round(arrXpos[i], scaleNum), Math.Round(arrYneg[i], scaleNum));
+                }
+                string resultString = dataString + tableString;
+                //Сохранение в файл
+                System.IO.File.WriteAllText(saveFilename, resultString);
             }
-            for (int i = 1; i < arrXneg.Count; i++)
+            catch (Exception ex)
             {
-                tableString += String.Format("\n{0, 9} {1, 16}",
-                                       Math.Round(arrXpos[i], scaleNum), Math.Round(arrYneg[i], scaleNum));
+                MessageBox.Show(ex.Message, "Ошибка");
+                return;
             }
-            string resultString = dataString + tableString;
-            //Сохранение в файл
-            System.IO.File.WriteAllText(saveFilename, resultString);
             MessageBox.Show("Файл сохранен", "Файл");
         }
 

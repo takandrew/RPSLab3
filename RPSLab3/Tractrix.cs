@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace RPSLab3
 {
-    static class Tractrix
+    public static class Tractrix
     {
         public static double TractrixBuild(double y, double aCoefficient)
         {
