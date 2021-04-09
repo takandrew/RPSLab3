@@ -1,6 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using RPSLab3;
 
 namespace UnitTestProject1
 {
@@ -8,7 +7,7 @@ namespace UnitTestProject1
     public class UnitTest1
     {
         [TestMethod]
-        public void TestYInt()
+        public void TestYInt() //Тест с целым значением Y
         { 
             double x; 
             double xExpected = 1.5;
@@ -18,7 +17,7 @@ namespace UnitTestProject1
         }
 
         [TestMethod]
-        public void TestYDouble()
+        public void TestYDouble() //Тест с дробным значением Y
         {
             double x;
             double xExpected = 1.4273;
@@ -28,7 +27,7 @@ namespace UnitTestProject1
         }
 
         [TestMethod]
-        public void TestYBig()
+        public void TestYBig() //Тест с большим значением Y
         {
             double x;
             double xExpected = 4;
@@ -38,7 +37,7 @@ namespace UnitTestProject1
         }
 
         [TestMethod]
-        public void TestYSmall()
+        public void TestYSmall() //Тест с маленьким значением Y
         {
             double x;
             double xExpected = 4.2983;
@@ -48,7 +47,7 @@ namespace UnitTestProject1
         }
 
         [TestMethod]
-        public void TestASmall()
+        public void TestASmall() //Тест при минимальном значении коэффициента а
         {
             double x;
             double xExpected = 0.009;

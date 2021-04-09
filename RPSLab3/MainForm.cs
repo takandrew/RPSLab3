@@ -1,11 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace RPSLab3
@@ -13,29 +9,29 @@ namespace RPSLab3
     public partial class MainForm : Form
     {
         InfoForm showInfoForm = null;
-        double aCoefficient;
-        double leftBorder;
-        double rightBorder;
-        double scale;
-        double x; double y;
-        List<double> arrXpos = new List<double>();
-        List<double> arrYpos = new List<double>();
-        List<double> arrXneg = new List<double>();
-        List<double> arrYneg = new List<double>();
-        int scaleNum;
+        double aCoefficient;//коэффициент а
+        double leftBorder;//левая граница графика
+        double rightBorder;//правая граница графика
+        double scale;//шаг
+        double x; double y;//координаты x,y
+        List<double> arrXpos = new List<double>();//лист координат Х после нуля по X
+        List<double> arrYpos = new List<double>();//лист координат Y до нуля
+        List<double> arrXneg = new List<double>();//лист координат Х до нуля
+        List<double> arrYneg = new List<double>();//лист координат Y после нуля по X
+        int scaleNum;//позиция точки в шаге
         public MainForm()
         {
             InitializeComponent();
             MaximizeBox = false; //Отключение возможности растягивания окна
-            Graph.Series["TractrixPos"].Points.AddXY(0, 0);
+            Graph.Series["TractrixPos"].Points.AddXY(0, 0); //Начальная настройка графика
             Graph.Series["TractrixNeg"].Points.AddXY(0, 0);
             Graph.ChartAreas[0].AxisX.Minimum = -5;
             Graph.ChartAreas[0].AxisX.Maximum = 5;
             Graph.ChartAreas[0].AxisY.Minimum = 0;
             Graph.ChartAreas[0].AxisY.Maximum = 5;
-            SaveDataToolStripMenuItem.Enabled = false;
+            SaveDataToolStripMenuItem.Enabled = false; //Настройка видимости до построения графика
             SaveResultToolStripMenuItem.Enabled = false;
-            if (AutoShowInfo.Default.autoShowInfo == true)
+            if (AutoShowInfo.Default.autoShowInfo == true) //Проверка необходимости вывода справки при запуске
             {
                 AutoShowInfoToolStripMenuItem.Checked = true;
                 showInfoForm = new InfoForm();
@@ -60,31 +56,33 @@ namespace RPSLab3
             }
         }
 
-        private void BuildGraphButton_Click(object sender, EventArgs e)
+        private void BuildGraphButton_Click(object sender, EventArgs e) //Построение графика и вывод таблицы
         {
-            SaveDataToolStripMenuItem.Enabled = true;
+            //Настройка видимости после нажатия кнопки "Построить график"
+            SaveDataToolStripMenuItem.Enabled = true; 
             SaveResultToolStripMenuItem.Enabled = true;
-            GraphTable.Rows.Clear();
+            GraphTable.Rows.Clear(); //Очистка предыдущих значений при повторном нажатии кнопки
             GraphTable.Columns.Clear();
             arrYpos.Clear(); arrXpos.Clear();
             arrYneg.Clear(); arrXneg.Clear();
             Graph.Series["TractrixPos"].Points.Clear();
             Graph.Series["TractrixNeg"].Points.Clear();
-            aCoefficient = (double)ACoefficientUpDown.Value;
+            aCoefficient = (double)ACoefficientUpDown.Value; 
             leftBorder = (double)LeftBorderUpDown.Value;
             rightBorder = (double)RightBorderUpDown.Value;
-            if (leftBorder >= rightBorder)
+            if (leftBorder >= rightBorder) //Проверка корректности границ графика
             {
                 MessageBox.Show("Левая граница не может быть больше или равной правой!", "Ошибка",
                     MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
+            //Установка границ графика
             Graph.ChartAreas[0].AxisX.Minimum = leftBorder;
             Graph.ChartAreas[0].AxisX.Maximum = rightBorder;
             Graph.ChartAreas[0].AxisY.Minimum = 0;
             Graph.ChartAreas[0].AxisY.Maximum = aCoefficient;
-            scale = (double)ScaleUpDown.Value;
-            for (y = aCoefficient; y > 0; y -= scale)
+            scale = (double)ScaleUpDown.Value; 
+            for (y = aCoefficient; y > 0; y -= scale) //Цикл расчета значений точек функции
             {
                 x = Tractrix.TractrixBuild(y, aCoefficient);
                 if ((x >= leftBorder) && (x <= rightBorder))
@@ -102,6 +100,7 @@ namespace RPSLab3
             }
             arrYpos.Reverse();
             arrXneg.Reverse();
+            //Запись в таблицу значений функции
             GraphTable.Columns.Add("xColumn", "x");
             GraphTable.Columns.Add("yColumn", "y");
             var scaleDotPos = (scale.ToString()).IndexOf('.');
@@ -114,6 +113,7 @@ namespace RPSLab3
 
         private void SaveDataToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            //Сохранение исходных данных в файл
             try
             {
                 if (saveFileDialog1.ShowDialog() == DialogResult.Cancel)
@@ -133,6 +133,7 @@ namespace RPSLab3
 
         private void ImportDataToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            //Импорт исходных данных из файла
             try
             {
                 MessageBox.Show("В файле должно содержаться только 4 числа в строго определённом порядке:\n" +
@@ -173,6 +174,7 @@ namespace RPSLab3
 
         private void SaveResultToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            //Сохранение результата программы в файл
             try
             {
                 if (saveFileDialog1.ShowDialog() == DialogResult.Cancel)
@@ -209,13 +211,14 @@ namespace RPSLab3
 
         private void AutoShowInfoToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (AutoShowInfoToolStripMenuItem.Checked)
+            //Установка настройки необходимости вывода справки при запуске программы
+            if (AutoShowInfoToolStripMenuItem.Checked) //Если до нажатия был включен вывод
             {
                 AutoShowInfoToolStripMenuItem.Checked = false;
                 AutoShowInfo.Default.autoShowInfo = false;
                 AutoShowInfo.Default.Save();
             }
-            else
+            else //Если до нажатия был выключен вывод
             {
                 AutoShowInfoToolStripMenuItem.Checked = true;
                 AutoShowInfo.Default.autoShowInfo = true;
