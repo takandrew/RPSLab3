@@ -14,10 +14,10 @@ namespace RPSLab3
         double rightBorder;//правая граница графика
         double scale;//шаг
         double x; double y;//координаты x,y
-        List<double> arrXpos = new List<double>();//лист координат Х после нуля по X
-        List<double> arrYpos = new List<double>();//лист координат Y до нуля
-        List<double> arrXneg = new List<double>();//лист координат Х до нуля
-        List<double> arrYneg = new List<double>();//лист координат Y после нуля по X
+        List<double> xAfterZero = new List<double>();//лист координат Х после нуля по X
+        List<double> yBeforeZero = new List<double>();//лист координат Y до нуля
+        List<double> xBeforeZero = new List<double>();//лист координат Х до нуля
+        List<double> yAfterZero = new List<double>();//лист координат Y после нуля по X
         int scaleNum;//позиция точки в шаге
         public MainForm()
         {
@@ -63,8 +63,8 @@ namespace RPSLab3
             SaveResultToolStripMenuItem.Enabled = true;
             GraphTable.Rows.Clear(); //Очистка предыдущих значений при повторном нажатии кнопки
             GraphTable.Columns.Clear();
-            arrYpos.Clear(); arrXpos.Clear();
-            arrYneg.Clear(); arrXneg.Clear();
+            yBeforeZero.Clear(); xAfterZero.Clear();
+            yAfterZero.Clear(); xBeforeZero.Clear();
             Graph.Series["TractrixPos"].Points.Clear();
             Graph.Series["TractrixNeg"].Points.Clear();
             aCoefficient = (double)ACoefficientUpDown.Value; 
@@ -82,33 +82,40 @@ namespace RPSLab3
             Graph.ChartAreas[0].AxisY.Minimum = 0;
             Graph.ChartAreas[0].AxisY.Maximum = aCoefficient;
             scale = (double)ScaleUpDown.Value; 
-            for (y = aCoefficient; y > 0; y -= scale) //Цикл расчета значений точек функции
+            for (y = aCoefficient-scale; y > 0; y -= scale) //Цикл расчета значений точек функции
             {
                 x = Tractrix.TractrixBuild(y, aCoefficient);
                 if ((x >= leftBorder) && (x <= rightBorder))
                 {
                     Graph.Series["TractrixPos"].Points.AddXY(x, y);
-                    arrXpos.Add(x);
-                    arrYneg.Add(y);
+                    xAfterZero.Add(x);
+                    yAfterZero.Add(y);
                 }
                 if ((-x >= leftBorder) && (-x <= rightBorder))
                 {
                     Graph.Series["TractrixNeg"].Points.AddXY(-x, y);
-                    arrXneg.Add(-x);
-                    arrYpos.Add(y);
+                    xBeforeZero.Add(-x);
+                    yBeforeZero.Add(y);
                 }
             }
-            arrYpos.Reverse();
-            arrXneg.Reverse();
+            yBeforeZero.Reverse();
+            xBeforeZero.Reverse();
             //Запись в таблицу значений функции
             GraphTable.Columns.Add("xColumn", "x");
             GraphTable.Columns.Add("yColumn", "y");
             var scaleDotPos = (scale.ToString()).IndexOf('.');
             scaleNum = (scale.ToString()).Length - 1 - scaleDotPos;
-            for (int i = 0; i < arrXneg.Count; i++)
-                GraphTable.Rows.Add(Math.Round(arrXneg[i], scaleNum), Math.Round(arrYpos[i], scaleNum));
-            for (int i = 1; i < arrXpos.Count; i++)
-                GraphTable.Rows.Add(Math.Round(arrXpos[i], scaleNum), Math.Round(arrYneg[i], scaleNum));
+            for (int i = 0; i < xBeforeZero.Count; i++)
+                GraphTable.Rows.Add(Math.Round(xBeforeZero[i], scaleNum), Math.Round(yBeforeZero[i], scaleNum));
+            for (int i = 1; i < xAfterZero.Count; i++)
+                GraphTable.Rows.Add(Math.Round(xAfterZero[i], scaleNum), Math.Round(yAfterZero[i], scaleNum));
+            if ((GraphTable.Rows.Count <= 1) ||
+                (Math.Round(xBeforeZero[xBeforeZero.Count-1], scaleNum) != Math.Round(-xAfterZero[0], scaleNum)))
+            {
+                MessageBox.Show("При данных значениях график вырождается в точку либо не имеет возможности быть построенным", "Ошибка",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
         }
 
         private void SaveDataToolStripMenuItem_Click(object sender, EventArgs e)
@@ -162,12 +169,13 @@ namespace RPSLab3
             catch (FormatException)
             {
                 MessageBox.Show("Файл содержит некорректные данные.\n" +
-                                "Файл не должен содержать букв и спец. символов.", "Ошибка!",
+                                "Файл не должен содержать букв и спец. символов. \n" +
+                                "Дробная часть должна отделяться от целой с помощью запятой", "Ошибка!",
                                 MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             catch (ArgumentOutOfRangeException)
             {
-                MessageBox.Show("В файле недостаточно данных или файл содержит больше данных, чем нужно.", "Ошибка!",
+                MessageBox.Show("В файле некорректные данные, недостаточно данных или файл содержит больше данных, чем нужно.", "Ошибка!",
                                 MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
@@ -187,15 +195,15 @@ namespace RPSLab3
                                 "Коэффициент c: " + aCoefficient + "\n" +
                                 "\nТаблица значений.\n";
                 string tableString = String.Format("\n{0, 12} {1, 15}", "Координата X", "Координата Y");
-                for (int i = 0; i < arrXneg.Count; i++)
+                for (int i = 0; i < xBeforeZero.Count; i++)
                 {
                     tableString += String.Format("\n{0, 9} {1, 16}",
-                                           Math.Round(arrXneg[i], scaleNum), Math.Round(arrYpos[i], scaleNum));
+                                           Math.Round(xBeforeZero[i], scaleNum), Math.Round(yBeforeZero[i], scaleNum));
                 }
-                for (int i = 1; i < arrXpos.Count; i++)
+                for (int i = 1; i < xAfterZero.Count; i++)
                 {
                     tableString += String.Format("\n{0, 9} {1, 16}",
-                                           Math.Round(arrXpos[i], scaleNum), Math.Round(arrYneg[i], scaleNum));
+                                           Math.Round(xAfterZero[i], scaleNum), Math.Round(yAfterZero[i], scaleNum));
                 }
                 string resultString = dataString + tableString;
                 //Сохранение в файл
