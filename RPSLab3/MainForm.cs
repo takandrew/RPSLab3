@@ -82,7 +82,7 @@ namespace RPSLab3
             Graph.ChartAreas[0].AxisY.Minimum = 0;
             Graph.ChartAreas[0].AxisY.Maximum = aCoefficient;
             scale = (double)ScaleUpDown.Value; 
-            for (y = aCoefficient-scale; y > 0; y -= scale) //Цикл расчета значений точек функции
+            for (y = aCoefficient; y > 0; y -= scale) //Цикл расчета значений точек функции
             {
                 x = Tractrix.TractrixBuild(y, aCoefficient);
                 if ((x >= leftBorder) && (x <= rightBorder))
@@ -110,7 +110,8 @@ namespace RPSLab3
             for (int i = 1; i < xAfterZero.Count; i++)
                 GraphTable.Rows.Add(Math.Round(xAfterZero[i], scaleNum), Math.Round(yAfterZero[i], scaleNum));
             if ((GraphTable.Rows.Count <= 1) ||
-                (Math.Round(xBeforeZero[xBeforeZero.Count-1], scaleNum) != Math.Round(-xAfterZero[0], scaleNum)))
+                (yBeforeZero[yBeforeZero.Count-1] != aCoefficient) ||
+                (yAfterZero[0] != aCoefficient))
             {
                 MessageBox.Show("При данных значениях график вырождается в точку либо не имеет возможности быть построенным", "Ошибка",
                     MessageBoxButtons.OK, MessageBoxIcon.Error);
